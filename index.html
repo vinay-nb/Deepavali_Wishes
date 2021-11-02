@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Happy Deepavali</title>
+    <!-- <link rel="icon" href="favicon.ico" > -->
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="android-chrome-512x512.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="android-chrome-192x192.png">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body> 
+    <embed height="0" width="0" src="namo_namo.mp3" autostart="true" loop="true"></embed>
+    <canvas id="mycanvas">
+    </canvas>
+    <span>
+        Best Wishes <i class="fa fa-heart"></i> <a href="https://vinaytechblogs.netlify.app/" target="_blank">Vinay Bhat</a>
+    </span>
+    <script>
+        var t = 0;
+        var c = document.querySelector("canvas");
+        var heightRatio = 1.5;
+        c.height = c.width * heightRatio;
+        var $ = c.getContext("2d" );
+        c.width = window.innerWidth;
+        c.height = window.innerHeight;
+        $.fillStyle = "hsla(0, 0%, 0%, 1)";
+        window.addEventListener(
+            "resize",
+            function() {
+                c.width = window.innerWidth;
+                c.height = window.innerHeight;
+            }, 
+            false
+        );
+        function draw() {
+            $.globalCompositeOperation = "source-over";
+            $.fillStyle = "hsla(0, 0%, 0%, 1)";
+            $.fillRect(0, 0, c.width, c.height);
+            var foo, i, j, r;
+            foo = Math.sin(t) * 2*Math.PI;
+            for(i=0; i<400; ++i) {
+                r = 400 * Math.sin(i*foo);
+                $.globalCompositeOperation = "";
+                $.fillStyle = "hsla("+ i + 12 +", 100%, 60%, 1)";
+                $.beginPath();
+                $.arc(
+                    Math.sin(i)*r + c.width/2,
+                    Math.cos(i) *r + c.height/2,
+                    1.5, 
+                    0, 
+                    Math.PI*2
+                );
+                $.fill();
+            }
+            t+=0.000005;
+            return(t%=2*Math.PI)
+        }
+        function run1() {
+            var name = document.getElementById("mycanvas");
+            var ctx = name.getContext("2d");
+            var text = "HAPPY DEEPAVALI";
+            ctx.font = "60px Comic Sans MS";
+            
+            var my_gradient=ctx.createLinearGradient(0, 0, 170, 0);
+            ctx.textAlign = "center";
+            ctx.shadowColor = "#e9e2df";
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
+            ctx.shadowBlur = 5;
+            ctx.fillStyle = "#FF0C00";
+            ctx.fillText(text, name.width/2, name.height/2);
+
+        }
+
+        function canvasSize(){
+            c.style.width = window.innerWidth + 'px';
+            c.style.height = window.innerHeight + 'px';
+            c.width = window.innerWidth * window.devicePixelRatio;
+            c.height = window.innerHeight * window.devicePixelRatio;
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+        }
+
+        function run() {
+            window.requestAnimationFrame(run);
+            draw();
+            run1();
+
+        }
+        run();
+
+        window.onload = function(){
+            canvasSize();
+        }
+        
+    </script>
+
+</body>
+</html>
